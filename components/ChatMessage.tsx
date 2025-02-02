@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import { View, Text } from 'react-native';
 import { Role } from '@/utils/Interfaces';
-import Colors from '@/constants/Colors';
-import { Ionicons } from "@expo/vector-icons";
+import LoadingDots from './LoadingDots';
 
 type Message = {
   role: Role;
@@ -14,71 +13,45 @@ type Props = Message & {
 };
 
 const ChatMessage = ({ content, role, loading }: Props) => {
+  const isUser = role === 'user';
+
   return (
-    <View style={styles.row}>
-      <View style={{ marginTop: 10 }}>
-        {role === 'assistant' ? (
-          <View style={[styles.avatar, { backgroundColor: '#000' }]}>
-            <Text style={styles.avatarText}>AI</Text>
+    <View className={`flex-row items-start px-4 gap-4 my-2 ${isUser ? 'justify-end' : ''}`}>
+      {!isUser && (
+        <View className="mt-1">
+          <View className="w-[30px] h-[30px] rounded-full bg-foreground justify-center items-center">
+            <Text className="text-primary-foreground text-xs font-semibold">AI</Text>
           </View>
-        ) : (
-          <View style={[styles.avatar, { backgroundColor: Colors.greyLight }]}>
-            <Ionicons name="person" size={20} color="#fff" />
-          </View>
-        )}
-      </View>
+        </View>
+      )}
 
       {loading ? (
-        <View style={styles.loading}>
-          <ActivityIndicator color={Colors.primary} size="small" />
+        <View className="justify-center mt-3 h-[26px]">
+          <LoadingDots />
         </View>
       ) : (
-        <View style={styles.messageContainer}>
-          <View style={styles.textContainer}>
-            <Text style={styles.text}>{content}</Text>
+        <View className={`flex-1 ${isUser ? 'items-end' : ''}`}>
+          <View 
+            className={` ${
+              isUser 
+                ? 'bg-muted max-w-[90%] rounded-2xl p-3 rounded-tr-sm' 
+                : 'mt-2'
+            }`}
+          >
+            <Text 
+              className={`text-lg flex-wrap ${
+                isUser 
+                  ? 'text-foreground' 
+                  : 'text-foreground'
+              }`}
+            >
+              {content}
+            </Text>
           </View>
         </View>
       )}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    paddingHorizontal: 14,
-    gap: 14,
-    marginVertical: 12,
-    backgroundColor: '#FFFFFF',
-  },
-  avatar: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  avatarText: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  messageContainer: {
-    flex: 1,
-  },
-  textContainer: {
-    padding: 4,
-  },
-  text: {
-    fontSize: 16,
-    flexWrap: 'wrap',
-  },
-  loading: {
-    justifyContent: 'center',
-    height: 26,
-    marginLeft: 14,
-  },
-});
 
 export default ChatMessage; 

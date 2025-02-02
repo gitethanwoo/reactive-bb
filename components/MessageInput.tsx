@@ -1,7 +1,7 @@
 import { TextInput, View } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import Colors from '@/constants/Colors';
+import { getColor } from '@/utils/colors';
 
 type Props = {
   onShouldSend: (message: string) => void;
@@ -17,11 +17,11 @@ const MessageInput = ({ onShouldSend, input, handleInputChange, handleSubmit }: 
   };
 
   return (
-    <View className="flex-row items-end bg-white rounded-full shadow-sm px-4 py-2">
+    <View className="flex-row items-end bg-muted rounded-2xl px-4 py-2">
       <TextInput
         placeholder="Message"
-        className="flex-1 mr-2 max-h-[120px] text-[16px] leading-5 py-3"
-        placeholderTextColor="#6B7280"
+        className="flex-1 mr-2 max-h-[120px] text-[16px] leading-5 py-3 text-foreground"
+        placeholderTextColor={getColor('muted-foreground')}
         value={input}
         multiline
         onChange={e =>
@@ -38,11 +38,14 @@ const MessageInput = ({ onShouldSend, input, handleInputChange, handleSubmit }: 
           e.preventDefault();
         }}
       />
-      <TouchableOpacity onPress={onSend} disabled={input?.length === 0}>
+      <TouchableOpacity 
+        onPress={onSend} 
+        disabled={input?.length === 0}
+      >
         <Ionicons 
           name="arrow-up-circle" 
-          size={32}
-          color={input?.length === 0 ? Colors.greyLight : Colors.primary} 
+          size={36}
+          color={input?.length === 0 ? getColor('muted-foreground') : getColor('primary')} 
         />
       </TouchableOpacity>
     </View>
