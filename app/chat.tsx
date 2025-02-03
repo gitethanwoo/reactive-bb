@@ -22,6 +22,13 @@ export default function ChatScreen() {
     fetch: expoFetch as unknown as typeof globalThis.fetch,
     api: generateAPIUrl('/api/chat'),
     onError: error => console.error(error, 'ERROR'),
+    initialMessages: [
+      {
+        role: 'assistant',
+        content: "Hello! I'm your Biblical AI assistant. How can I help you explore scripture and apply biblical wisdom today?",
+        id: 'initial-message',
+      }
+    ],
   });
   
   const router = useRouter();
@@ -85,16 +92,14 @@ export default function ChatScreen() {
     handleSubmit(event);
   };
 
-  const shouldShowThinking = isLoading && messages.length > 0 && 
-    messages[messages.length - 1].role === Role.User;
 
   return (
     <View className="flex-1 bg-background">
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView edges={['top']} className="bg-background">
+      <SafeAreaView edges={['top']} className="bg-background border-b border-border">
         <View 
           style={{ height: 44 + insets.top, paddingTop: insets.top }}
-          className="flex-row items-center border-b border-border z-10"
+          className="flex-row items-center z-10 md:max-w-[768px] w-full md:mx-auto"
         >
           <View className="flex-1 flex-row items-center">
             <TouchableOpacity 
@@ -112,7 +117,7 @@ export default function ChatScreen() {
         </View>
       </SafeAreaView>
       
-      <View className="flex-1">
+      <View className="flex-1 md:max-w-[768px] md:mx-auto">
         <Animated.ScrollView
           className="flex-1"
           contentContainerStyle={{ paddingBottom: keyboardHeight + 20, paddingVertical: 20 }}
@@ -126,28 +131,30 @@ export default function ChatScreen() {
             </Animated.View>
           ) : (
             <>
-              {messages.map(m => (
+              {messages.map((m, index) => (
                 <ChatMessage
                   key={m.id}
                   role={m.role as Role}
                   content={m.content}
                   loading={
                     isLoading && 
-                    m.role === Role.Assistant && 
-                    messages[messages.length - 1].id === m.id && 
+                    messages.length - 1 === index && 
+                    m.role === 'assistant' && 
                     m.content === ''
                   }
                 />
               ))}
-              {shouldShowThinking && <ThinkingMessage />}
+              {isLoading &&
+                messages.length > 0 &&
+                messages[messages.length - 1].role === 'user' && <ThinkingMessage />}
             </>
           )}
         </Animated.ScrollView>
 
-        <SafeAreaView edges={['bottom']}>
+        <SafeAreaView edges={['bottom']} className="bg-background/80 border-t border-border">
           <Animated.View 
             style={[animatedStyles]} 
-            className="px-3 py-4"
+            className="px-3 py-4 md:max-w-[768px] w-full relative"
           >
             <BlurView
               intensity={100}

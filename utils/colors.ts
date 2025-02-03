@@ -20,7 +20,7 @@ function hslToRgb(h: number, s: number, l: number): string {
 export const colors = {
   background: '#FFFFFF',
   foreground: '#09090B',
-  primary: '#007AFF',
+  primary: '#CD9A49',
   'primary-foreground': '#FFFFFF',
   secondary: '#F4F4F5',
   'secondary-foreground': '#18181B',

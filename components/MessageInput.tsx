@@ -17,7 +17,7 @@ const MessageInput = ({ onShouldSend, input, handleInputChange, handleSubmit }: 
   };
 
   return (
-    <View className="flex-row items-end bg-muted rounded-2xl px-4 py-2">
+    <View className="flex-row w-full items-end rounded-2xl px-4 py-2">
       <TextInput
         placeholder="Message"
         className="flex-1 mr-2 max-h-[120px] text-[16px] leading-5 py-3 text-foreground"

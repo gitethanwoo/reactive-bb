@@ -2,7 +2,7 @@ const tintColorLight = "#007AFF";
 const tintColorDark = "#fff";
 
 const sharedColors = {
-  primary: "#007AFF",
+  primary: "#CD9A49",
   lime: "#D7FFD4",
   pink: "#F655FF",
   brown: "#29271D",
