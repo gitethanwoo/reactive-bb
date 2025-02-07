@@ -9,31 +9,8 @@ Structure files: exported component, subcomponents, helpers, static content, typ
 Follow Expo's official documentation for setting up and configuring your projects: https://docs.expo.dev/
 
 
-Before coding, make a plan inside a <thinking> tag.
-1. Identify core requirement
-2. Consider 3 implementation approaches
-3. Choose simplest that meets needs
-4. Verify with these questions:
-– Can this be split into smaller functions?
-– Are there unnecessary abstractions?
-– Will this be clear to a junior dev?
 
-For example:
-<thinking>
-Let me think through this step by step.
-...
-</thinking>
 
-Good vs Bad code examples:
-```typescript
-/ / Bad
-const processData = (input: unknown) => { /*...*/ }
-/ / Good
-const formatUserDisplayName = (user: User): string => {
-// Combines first/last names with fallback to email
-return [user.firstName, user.lastName].filter(Boolean).join(' ') || user.email
-}
-```
 
 
 Naming Conventions
